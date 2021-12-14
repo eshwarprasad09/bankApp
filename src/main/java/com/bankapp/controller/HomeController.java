@@ -89,18 +89,5 @@ public class HomeController {
         LoanStatus loanStatus = userService.getLoanStatus(loanDto);
         return new ResponseEntity<LoanStatus>(loanStatus, HttpStatus.OK);
     }
-
-
-    //checked out feature branch eshwarprasad
-    //checked out feature branch eshwarprasad one more time
-
-//    checked out sprint
-    //checked out feature
-
-    //checked out feature branch
-
-
-    //commit done by ajay
-
-
+    //Comment added
 }
