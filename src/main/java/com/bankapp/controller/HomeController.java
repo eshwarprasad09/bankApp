@@ -89,7 +89,5 @@ public class HomeController {
         LoanStatus loanStatus = userService.getLoanStatus(loanDto);
         return new ResponseEntity<LoanStatus>(loanStatus, HttpStatus.OK);
     }
-
-//    checked out sprint
-    //checked out feature
+    //role based authentication
 }
