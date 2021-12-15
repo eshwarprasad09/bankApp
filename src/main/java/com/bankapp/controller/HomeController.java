@@ -27,12 +27,12 @@ public class HomeController {
     private AccountHistoryRepository accountHistoryRepository;
 
     @GetMapping("/")
-    public String home(){
+    public String home() {
         return "Welcome to HSBC Bank";
     }
 
     @PostMapping("/openaccount")
-    public ResponseEntity<User> openAccount(@RequestBody UserDto userDto){
+    public ResponseEntity<User> openAccount(@RequestBody UserDto userDto) {
         User user = new User();
         user.setName(userDto.getName());
         user.setEmail(userDto.getEmail());
@@ -57,7 +57,7 @@ public class HomeController {
     }
 
     @PostMapping("/moneytransfer")
-    public String moneyTransfer(@RequestBody MoneyTransferDto moneyTransferDto){
+    public String moneyTransfer(@RequestBody MoneyTransferDto moneyTransferDto) {
         String toAccount = moneyTransferDto.getToAccount();
         String fromAccount = moneyTransferDto.getFromAccount();
         userService.moneyTransfer(toAccount, fromAccount, moneyTransferDto);
@@ -65,13 +65,13 @@ public class HomeController {
     }
 
     @GetMapping("/getuser/{accountNo}")
-    public ResponseEntity<User> getUser(@PathVariable("accountNo") String accountNo){
+    public ResponseEntity<User> getUser(@PathVariable("accountNo") String accountNo) {
         User user = userService.getUserByAccountNo(accountNo);
         return new ResponseEntity<User>(user, HttpStatus.FOUND);
     }
 
     @GetMapping("/accounthistory/{accountNo}")
-    public ResponseEntity<List> getAccountHistory(@PathVariable("accountNo") String accountNo){
+    public ResponseEntity<List> getAccountHistory(@PathVariable("accountNo") String accountNo) {
         List accountHistoryList = accountHistoryRepository.getMiniStatement(accountNo);
 //        accountHistoryList = accountHistoryRepository.getMiniStatement(accountNo);
         User user = userService.getUserByAccountNo(accountNo);
@@ -79,14 +79,36 @@ public class HomeController {
         userAccount.setAccountNo(user.getAccountNumber());
         userAccount.setName(user.getName());
         userAccount.setBalance(user.getBalance());
-        accountHistoryList.add(0,userAccount);
+        accountHistoryList.add(0, userAccount);
         return new ResponseEntity<List>(accountHistoryList, HttpStatus.FOUND);
     }
 
     @GetMapping("/loan")
-    public ResponseEntity<LoanStatus> loanStatus(@RequestBody LoanDto loanDto){
+    public ResponseEntity<LoanStatus> loanStatus(@RequestBody LoanDto loanDto) {
         User user = userService.getUserByAccountNo(loanDto.getAccountNo());
         LoanStatus loanStatus = userService.getLoanStatus(loanDto);
         return new ResponseEntity<LoanStatus>(loanStatus, HttpStatus.OK);
     }
+
+}           //first commit by ramu
+
+
+    //check out feature branch prapulla
+
+
+
+    //checked out feature branch eshwarprasad
+    //checked out feature branch eshwarprasad one more time
+
+//    checked out sprint
+    //checked out feature
+
+    //checked out feature branch
+
+
+    //commit done by ajay
+
+
+
 }
+
