@@ -90,6 +90,10 @@ public class HomeController {
         return new ResponseEntity<LoanStatus>(loanStatus, HttpStatus.OK);
     }
 
+    //role based authentication
+}
+
+
 }           //first commit by ramu
 
 
@@ -111,4 +115,5 @@ public class HomeController {
 
 
 }
+
 
