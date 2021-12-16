@@ -1,9 +1,6 @@
 package com.bankapp.service;
 
-import com.bankapp.Dto.BalanceEnquiry;
-import com.bankapp.Dto.LoanDto;
-import com.bankapp.Dto.LoanStatus;
-import com.bankapp.Dto.MoneyTransferDto;
+import com.bankapp.Dto.*;
 import com.bankapp.model.AccountHistory;
 import com.bankapp.model.User;
 import com.bankapp.repository.AccountHistoryRepository;
@@ -83,5 +80,10 @@ public class UserService {
         }
         loanStatus.setLoanStatus("Not approved Account Not Exists");
         return loanStatus;
+    }
+
+    public User getLogin(LoginDto loginDto){
+        User user = userRepository.getUserByLogin(loginDto.getEmail(), loginDto.getPassword());
+        return user;
     }
 }

@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 public class HomeController {
@@ -90,6 +91,23 @@ public class HomeController {
         return new ResponseEntity<LoanStatus>(loanStatus, HttpStatus.OK);
     }
 
+    @GetMapping("/login")
+    public String login(@RequestBody LoginDto loginDto){
+        User user = userService.getLogin(loginDto);
+        if(user != null){
+            Set<Role> roles = user.getRoles();
+            for(Role role : roles){
+                return role.getName() + " Login Success";
+            }
+            return "Login Success";
+        }
+        else{
+            return "Invalid user";
+        }
+    }
+
+
+
 
     //checked out feature branch eshwarprasad
     //checked out feature branch eshwarprasad one more time
@@ -98,4 +116,5 @@ public class HomeController {
     //checked out feature
 
     //checked out feature branch
+
 }
