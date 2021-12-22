@@ -1,15 +1,15 @@
 package com.bankapp.model;
 
 import org.hibernate.annotations.CreationTimestamp;
-
+import java.util.Date;
 import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
-@Table(name = "accounthistory")
-public class AccountHistory {
+@Table(name = "tranactionhistory")
+public class TransactionHistory {
 
-    public AccountHistory() {
+    public TransactionHistory() {
     }
 
     @Id
@@ -19,6 +19,9 @@ public class AccountHistory {
     @CreationTimestamp
     private Timestamp time;
 
+    @Temporal(TemporalType.DATE)
+    private  Date createdDate = new Date(System.currentTimeMillis());
+
     @Column(nullable = false, length = 45)
     private String fromAccount;
 
@@ -27,6 +30,9 @@ public class AccountHistory {
 
     @Column(nullable = false, length = 45)
     private Long amount;
+
+    @Column(nullable=false,length=45)
+    private String remark;
 
     @Column(name = "userId")
     private Long userId;
@@ -78,4 +84,8 @@ public class AccountHistory {
     public void setUserId(Long userId) {
         this.userId = userId;
     }
+
+    public String getRemark() { return remark;}
+
+    public void setRemark(String remark) { this.remark = remark;}
 }
