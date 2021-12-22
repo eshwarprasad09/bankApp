@@ -49,6 +49,7 @@ public class HomeController {
         return new ResponseEntity<User>(user, HttpStatus.CREATED);
     }
 
+
     @GetMapping("/getbalance/{accountNo}")
     public ResponseEntity<BalanceEnquiry> getBalance(@PathVariable("accountNo") String accountNo) {
         if (!userService.isAccountExists(accountNo)) {
@@ -57,7 +58,6 @@ public class HomeController {
         BalanceEnquiry balance = userService.getBalance(accountNo);
         return new ResponseEntity<BalanceEnquiry>(balance, HttpStatus.ACCEPTED);
     }
-
     @PostMapping("/moneytransfer")
     public String moneyTransfer(@RequestBody MoneyTransferDto moneyTransferDto) {
         String toAccount = moneyTransferDto.getToAccount();
@@ -110,6 +110,8 @@ public class HomeController {
     }
     //junit testing
 }
+
+
 
 
 
