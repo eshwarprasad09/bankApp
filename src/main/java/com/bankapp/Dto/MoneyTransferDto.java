@@ -5,6 +5,7 @@ public class MoneyTransferDto {
     private String fromAccount;
     private String toAccount;
     private Long amount;
+    private String remark;
 
     public String getFromAccount() {
         return fromAccount;
@@ -29,4 +30,8 @@ public class MoneyTransferDto {
     public void setAmount(Long amount) {
         this.amount = amount;
     }
+
+    public String getRemark() { return remark;}
+
+    public void setRemark(String remark) { this.remark = remark;}
 }
