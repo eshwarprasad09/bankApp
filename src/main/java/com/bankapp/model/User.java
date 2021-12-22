@@ -44,7 +44,7 @@ public class User {
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "uid", referencedColumnName = "id")
-    private List<AccountHistory> accountHistoryList;
+    private List<TransactionHistory> transactionHistoryList;
 
     public Set<Role> getRoles() {
         return roles;
@@ -114,12 +114,12 @@ public class User {
         this.roles.add(role);
     }
 
-    public List<AccountHistory> getAccountHistoryList() {
-        return accountHistoryList;
+    public List<TransactionHistory> getTransactionHistoryList() {
+        return transactionHistoryList;
     }
 
-    public void setAccountHistoryList(List<AccountHistory> accountHistoryList) {
-        this.accountHistoryList = accountHistoryList;
+    public void setAccountHistoryList(List<TransactionHistory> transactionHistoryList) {
+        this.transactionHistoryList = transactionHistoryList;
     }
 
 }
