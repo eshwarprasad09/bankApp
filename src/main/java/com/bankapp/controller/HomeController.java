@@ -1,10 +1,10 @@
 package com.bankapp.controller;
 
 import com.bankapp.Dto.*;
-import com.bankapp.model.AccountHistory;
+import com.bankapp.model.TransactionHistory;
 import com.bankapp.model.Role;
 import com.bankapp.model.User;
-import com.bankapp.repository.AccountHistoryRepository;
+import com.bankapp.repository.TransactionHistoryRepository;
 import com.bankapp.repository.RoleRepository;
 import com.bankapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
+
 
 @RestController
 public class HomeController {
@@ -24,7 +26,7 @@ public class HomeController {
     private RoleRepository roleRepository;
 
     @Autowired
-    private AccountHistoryRepository accountHistoryRepository;
+    private TransactionHistoryRepository transactionHistoryRepository;
 
     @GetMapping("/")
     public String home() {
@@ -60,6 +62,7 @@ public class HomeController {
     public String moneyTransfer(@RequestBody MoneyTransferDto moneyTransferDto) {
         String toAccount = moneyTransferDto.getToAccount();
         String fromAccount = moneyTransferDto.getFromAccount();
+        String remark = moneyTransferDto.getRemark();
         userService.moneyTransfer(toAccount, fromAccount, moneyTransferDto);
         return "Transfer Success";
     }
@@ -70,17 +73,17 @@ public class HomeController {
         return new ResponseEntity<User>(user, HttpStatus.FOUND);
     }
 
-    @GetMapping("/accounthistory/{accountNo}")
-    public ResponseEntity<List> getAccountHistory(@PathVariable("accountNo") String accountNo) {
-        List accountHistoryList = accountHistoryRepository.getMiniStatement(accountNo);
+    @GetMapping("/transactionhistory/{accountNo}")
+    public ResponseEntity<List> getTransactionHistory(@PathVariable("accountNo") String accountNo) {
+        List transactionHistoryList = transactionHistoryRepository.getMiniStatement(accountNo);
 //        accountHistoryList = accountHistoryRepository.getMiniStatement(accountNo);
         User user = userService.getUserByAccountNo(accountNo);
         UserAccount userAccount = new UserAccount();
         userAccount.setAccountNo(user.getAccountNumber());
         userAccount.setName(user.getName());
         userAccount.setBalance(user.getBalance());
-        accountHistoryList.add(0, userAccount);
-        return new ResponseEntity<List>(accountHistoryList, HttpStatus.FOUND);
+        transactionHistoryList.add(0, userAccount);
+        return new ResponseEntity<List>(transactionHistoryList, HttpStatus.FOUND);
     }
 
     @GetMapping("/loan")
@@ -90,30 +93,29 @@ public class HomeController {
         return new ResponseEntity<LoanStatus>(loanStatus, HttpStatus.OK);
     }
 
-    //role based authentication
+    @GetMapping("/login")
+    public String login(@RequestBody LoginDto loginDto) {
+        User user = userService.getLogin(loginDto);
+        if (user != null) {
+            Set<Role> roles = user.getRoles();
+            for (Role role : roles) {
+                return role.getName() + " Login Success";
+            }
+            return "Login Success";
+        } else {
+            return "Invalid user";
+        }
+
+
+    }
+    //junit testing
 }
 
 
-}           //first commit by ramu
-
-
-    //check out feature branch prapulla
 
 
 
-    //checked out feature branch eshwarprasad
-    //checked out feature branch eshwarprasad one more time
-
-//    checked out sprint
-    //checked out feature
-
-    //checked out feature branch
 
 
-    //commit done by ajay
-
-
-
-}
 
 

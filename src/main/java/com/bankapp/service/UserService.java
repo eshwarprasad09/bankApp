@@ -1,12 +1,12 @@
 package com.bankapp.service;
-
+import com.bankapp.Dto.*;
 import com.bankapp.Dto.BalanceEnquiry;
 import com.bankapp.Dto.LoanDto;
 import com.bankapp.Dto.LoanStatus;
 import com.bankapp.Dto.MoneyTransferDto;
-import com.bankapp.model.AccountHistory;
+import com.bankapp.model.TransactionHistory;
 import com.bankapp.model.User;
-import com.bankapp.repository.AccountHistoryRepository;
+import com.bankapp.repository.TransactionHistoryRepository;
 import com.bankapp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,7 +18,7 @@ public class UserService {
     private UserRepository userRepository;
 
     @Autowired
-    private AccountHistoryRepository accountHistoryRepository;
+    private TransactionHistoryRepository transactionHistoryRepository;
 
     public void saveUser(User user){
         userRepository.save(user);
@@ -53,12 +53,13 @@ public class UserService {
         }
 
         User user = userRepository.getUserByAccountNo(fromAccount);
-        AccountHistory accountHistory = new AccountHistory();
-        accountHistory.setToAccount(transferDto.getToAccount());
-        accountHistory.setFromAccount(transferDto.getFromAccount());
-        accountHistory.setAmount(transferDto.getAmount());
-        accountHistory.setUserId(user.getId());
-        accountHistoryRepository.save(accountHistory);
+        TransactionHistory transactionHistory = new TransactionHistory();
+        transactionHistory.setToAccount(transferDto.getToAccount());
+        transactionHistory.setFromAccount(transferDto.getFromAccount());
+        transactionHistory.setAmount(transferDto.getAmount());
+        transactionHistory.setRemark(transferDto.getRemark());
+        transactionHistory.setUserId(user.getId());
+        transactionHistoryRepository.save(transactionHistory);
     }
 
     public User getUserByAccountNo(String accountNo) {
@@ -83,5 +84,10 @@ public class UserService {
         }
         loanStatus.setLoanStatus("Not approved Account Not Exists");
         return loanStatus;
+    }
+
+    public User getLogin(LoginDto loginDto){
+        User user = userRepository.getUserByLogin(loginDto.getEmail(), loginDto.getPassword());
+        return user;
     }
 }
