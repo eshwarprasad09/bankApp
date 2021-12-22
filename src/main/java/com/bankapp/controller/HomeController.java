@@ -92,7 +92,11 @@ public class HomeController {
         LoanStatus loanStatus = userService.getLoanStatus(loanDto);
         return new ResponseEntity<LoanStatus>(loanStatus, HttpStatus.OK);
     }
+    //Comment added
 
+
+    //commit By ajay
+}
     @GetMapping("/login")
     public String login(@RequestBody LoginDto loginDto) {
         User user = userService.getLogin(loginDto);
