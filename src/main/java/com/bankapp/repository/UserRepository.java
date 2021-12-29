@@ -18,4 +18,3 @@ public interface UserRepository extends JpaRepository<User, Long> {
     User getUserByLogin(String email, String password);
 
 }
-

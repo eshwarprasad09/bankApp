@@ -1,19 +1,4 @@
-package com.bankapp.service;
-
-import com.bankapp.Dto.*;
-import com.bankapp.model.AccountHistory;
-import com.bankapp.model.Role;
-import com.bankapp.model.User;
-import com.bankapp.repository.AccountHistoryRepository;
-import com.bankapp.repository.RoleRepository;
-import com.bankapp.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
-
-@Service
-public class UserService {
+{
 
     @Autowired
     private UserRepository userRepository;

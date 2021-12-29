@@ -1,22 +1,4 @@
-package com.bankapp.controller;
-
-import com.bankapp.Dto.*;
-import com.bankapp.model.AccountHistory;
-import com.bankapp.model.Role;
-import com.bankapp.model.User;
-import com.bankapp.repository.AccountHistoryRepository;
-import com.bankapp.repository.RoleRepository;
-import com.bankapp.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Set;
-
-@RestController
-public class HomeController {
+{
 
     @Autowired
     private UserService userService;
