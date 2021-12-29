@@ -2,11 +2,15 @@ package com.bankapp.service;
 
 import com.bankapp.Dto.*;
 import com.bankapp.model.AccountHistory;
+import com.bankapp.model.Role;
 import com.bankapp.model.User;
 import com.bankapp.repository.AccountHistoryRepository;
+import com.bankapp.repository.RoleRepository;
 import com.bankapp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class UserService {
@@ -17,8 +21,37 @@ public class UserService {
     @Autowired
     private AccountHistoryRepository accountHistoryRepository;
 
+    @Autowired
+    private RoleRepository roleRepository;
+
     public void saveUser(User user){
         userRepository.save(user);
+    }
+
+    public User openAccount(UserDto userDto){
+        User user = new User();
+        user.setName(userDto.getName());
+        user.setEmail(userDto.getEmail());
+        user.setPassword(userDto.getPassword());
+        user.setBalance(1000L);
+        user.setAccountNumber("1");
+
+        Role roleUser = roleRepository.findByName("user");
+        user.addRole(roleUser);
+
+        saveUser(user);
+        return user;
+    }
+
+    public List getAccountHistory(String accountNo){
+        List accountHistoryList = accountHistoryRepository.getMiniStatement(accountNo);
+        User user = getUserByAccountNo(accountNo);
+        UserAccount userAccount = new UserAccount();
+        userAccount.setAccountNo(user.getAccountNumber());
+        userAccount.setName(user.getName());
+        userAccount.setBalance(user.getBalance());
+        accountHistoryList.add(0,userAccount);
+        return accountHistoryList;
     }
 
     public BalanceEnquiry getBalance(String accountNo) {
@@ -29,10 +62,7 @@ public class UserService {
 
     public Boolean isAccountExists(String accountNo) {
         User user = userRepository.getUserByAccountNo(accountNo);
-        if (user == null) {
-            return false;
-        }
-        return true;
+        return user != null;
     }
 
     public void moneyTransfer(String toAccount, String fromAccount,MoneyTransferDto transferDto){
@@ -59,8 +89,7 @@ public class UserService {
     }
 
     public User getUserByAccountNo(String accountNo) {
-        User user = userRepository.getUserByAccountNo(accountNo);
-        return user;
+        return userRepository.getUserByAccountNo(accountNo);
     }
 
     public LoanStatus getLoanStatus(LoanDto loanDto){
@@ -83,7 +112,6 @@ public class UserService {
     }
 
     public User getLogin(LoginDto loginDto){
-        User user = userRepository.getUserByLogin(loginDto.getEmail(), loginDto.getPassword());
-        return user;
+        return userRepository.getUserByLogin(loginDto.getEmail(), loginDto.getPassword());
     }
 }

@@ -34,17 +34,7 @@ public class HomeController {
 
     @PostMapping("/openaccount")
     public ResponseEntity<User> openAccount(@RequestBody UserDto userDto){
-        User user = new User();
-        user.setName(userDto.getName());
-        user.setEmail(userDto.getEmail());
-        user.setPassword(userDto.getPassword());
-        user.setBalance(1000L);
-        user.setAccountNumber("1");
-
-        Role roleUser = roleRepository.findByName("user");
-        user.addRole(roleUser);
-
-        userService.saveUser(user);
+        User user = userService.openAccount(userDto);
         return new ResponseEntity<User>(user, HttpStatus.CREATED);
     }
 
@@ -73,15 +63,8 @@ public class HomeController {
 
     @GetMapping("/accounthistory/{accountNo}")
     public ResponseEntity<List> getAccountHistory(@PathVariable("accountNo") String accountNo){
-        List accountHistoryList = accountHistoryRepository.getMiniStatement(accountNo);
-//        accountHistoryList = accountHistoryRepository.getMiniStatement(accountNo);
-        User user = userService.getUserByAccountNo(accountNo);
-        UserAccount userAccount = new UserAccount();
-        userAccount.setAccountNo(user.getAccountNumber());
-        userAccount.setName(user.getName());
-        userAccount.setBalance(user.getBalance());
-        accountHistoryList.add(0,userAccount);
-        return new ResponseEntity<List>(accountHistoryList, HttpStatus.FOUND);
+        List accountHistory = userService.getAccountHistory(accountNo);
+        return new ResponseEntity<List>(accountHistory, HttpStatus.FOUND);
     }
 
     @GetMapping("/loan")
@@ -105,9 +88,6 @@ public class HomeController {
             return "Invalid user";
         }
     }
-
-
-
 
     //checked out feature branch eshwarprasad
     //checked out feature branch eshwarprasad one more time
